@@ -5,34 +5,186 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="weather-app">
-    <header>
-      <h1 id="location">Fetching location...</h1>
-      <h2 id="temperature">--°</h2>
-      <p id="condition">---</p>
-    </header>
-    <section id="details">
-      <div>
-        <h3>Feels Like</h3>
-        <p id="feelsLike">--°</p>
+    <div class="main-weather">
+      <h1 id="city">Loading...</h1>
+      <h2 id="temperature">--°C</h2>
+      <p id="description">---</p>
+      <div class="icon-container">
+        <img id="weather-icon" src="https://cdn3.iconfinder.com/data/icons/weather-ios-11-1/50/Mostly_Cloudy_Cloudy_Night_Cloud_Nebulosity_Nebula_Apple_Weather-512.png" alt="Weather icon">
       </div>
-      <div>
-        <h3>Precipitation</h3>
-        <p id="precipitation">-- mm</p>
+    </div>
+
+    <div class="details">
+      <div class="detail-item">
+        <p>Feels Like:</p>
+        <span id="feels-like">--°C</span>
       </div>
-      <div>
-        <h3>Sunrise</h3>
-        <p id="sunrise">--:--</p>
+      <div class="detail-item">
+        <p>Humidity:</p>
+        <span id="humidity">--%</span>
       </div>
-      <div>
-        <h3>Humidity</h3>
-        <p id="humidity">--%</p>
+      <div class="detail-item">
+        <p>Wind Speed:</p>
+        <span id="wind-speed">-- km/h</span>
       </div>
-    </section>
+      <div class="detail-item">
+        <p>Sunrise:</p>
+        <span id="sunrise">--:--</span>
+      </div>
+      <div class="detail-item">
+        <p>Sunset:</p>
+        <span id="sunset">--:--</span>
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
 </html>
+
+
+/* General Reset */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #89cfff, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.weather-app {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.main-weather {
+  margin-bottom: 20px;
+}
+
+.main-weather h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.main-weather h2 {
+  font-size: 60px;
+  margin: 10px 0;
+}
+
+.main-weather p {
+  font-size: 16px;
+  color: #666;
+}
+
+.icon-container img {
+  width: 80px;
+  height: 80px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.detail-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-item p {
+  margin: 0;
+  color: #555;
+  font-weight: bold;
+}
+
+.detail-item span {
+  font-size: 16px;
+  color: #000;
+}
+
+
+const apiKey = "90bf53ffb83ae6c976c1c29639cb86a2";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+const weatherIconUrl = "https://openweathermap.org/img/wn/";
+
+async function fetchWeather(lat, lon) {
+  try {
+    const response = await fetch(
+      `${apiUrl}?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+    );
+    if (!response.ok) {
+      throw new Error("Unable to fetch weather data.");
+    }
+    const data = await response.json();
+    updateWeatherUI(data);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function updateWeatherUI(data) {
+  const city = data.name;
+  const temperature = Math.round(data.main.temp);
+  const feelsLike = Math.round(data.main.feels_like);
+  const humidity = data.main.humidity;
+  const windSpeed = Math.round(data.wind.speed * 3.6); // Convert m/s to km/h
+  const description = data.weather[0].description;
+  const weatherIcon = `${weatherIconUrl}${data.weather[0].icon}@2x.png`;
+
+  const sunrise = formatTime(data.sys.sunrise);
+  const sunset = formatTime(data.sys.sunset);
+
+  document.getElementById("city").textContent = city;
+  document.getElementById("temperature").textContent = `${temperature}°C`;
+  document.getElementById("description").textContent = capitalize(description);
+  document.getElementById("feels-like").textContent = `${feelsLike}°C`;
+  document.getElementById("humidity").textContent = `${humidity}%`;
+  document.getElementById("wind-speed").textContent = `${windSpeed} km/h`;
+  document.getElementById("weather-icon").src = weatherIcon;
+  document.getElementById("sunrise").textContent = sunrise;
+  document.getElementById("sunset").textContent = sunset;
+}
+
+function formatTime(unixTime) {
+  const date = new Date(unixTime * 1000);
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeather(latitude, longitude);
+      },
+      (error) => {
+        alert("Unable to retrieve your location.");
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+// Initialize
+getLocation();
