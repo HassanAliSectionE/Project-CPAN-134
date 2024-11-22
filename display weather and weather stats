@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="weather-app">
+    <header>
+      <h1 id="location">Fetching location...</h1>
+      <h2 id="temperature">--°</h2>
+      <p id="condition">---</p>
+    </header>
+    <section id="details">
+      <div>
+        <h3>Feels Like</h3>
+        <p id="feelsLike">--°</p>
+      </div>
+      <div>
+        <h3>Precipitation</h3>
+        <p id="precipitation">-- mm</p>
+      </div>
+      <div>
+        <h3>Sunrise</h3>
+        <p id="sunrise">--:--</p>
+      </div>
+      <div>
+        <h3>Humidity</h3>
+        <p id="humidity">--%</p>
+      </div>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
