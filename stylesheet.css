@@ -17,3 +17,22 @@ h1 {
     align-items: center;
     padding: 20px;
 }
+
+.day-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.day-card h3 {
+    margin: 10px 0;
+}
+
+.day-card p {
+    margin: 5px 0;
+}
