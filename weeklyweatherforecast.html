@@ -59,14 +59,13 @@
                         const dayCard = document.createElement("div");
                         dayCard.className = "day-card";
     
-                        const day = new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
+                        const day = new Date(date).toLocaleDateString(undefined, { weekday: 'short' });
                         const minTemp = temperature_2m_min[index];
                         const maxTemp = temperature_2m_max[index];
     
                         dayCard.innerHTML = `
-                            <h3>${day}</h3>
-                            <p>Min: ${minTemp}°C</p>
-                            <p>Max: ${maxTemp}°C</p>
+                            <div class="day-name">${day}</div>
+                            <div class="temperature">Min: ${minTemp}°C, Max: ${maxTemp}°C</div>
                         `;
     
                         weatherContainer.appendChild(dayCard);
