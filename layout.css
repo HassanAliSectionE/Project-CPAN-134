@@ -113,4 +113,10 @@ padding: 20px;
     margin-bottom: 20px;  
     text-align: center;
     transition: transform 0.3s ease;
+    border-radius: 100px;
+  }
+  .weather-card:hover{
+
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15)
   }
