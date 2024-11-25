@@ -30,9 +30,31 @@ body {
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+  .bigcard{
+    grid-column: span 2; 
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
   .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
+  .bigcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  .stat{
+        font-size: 2em;
+        font-weight: bold;
+        margin: 10px 0;
+        color: #333;
+      }
   
