@@ -4,32 +4,23 @@ margin: 0;
 padding: 0;
 transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 color: black;
-<<<<<<< HEAD
-}
-  
-=======
 background-size: cover;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }
 
->>>>>>> 6998e3c642583850c7d33e242dd51450cd135701
+
 body.dark-mode {
 background-color: black;
 color: white;
 }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 6998e3c642583850c7d33e242dd51450cd135701
+
 .container {
 text-align: center;
 padding: 20px;
 }
-<<<<<<< HEAD
-  
-=======
+
 
 h1 {
 margin-top: 50px;
@@ -76,18 +67,16 @@ body.dark-mode .icon:hover {
 background: white;
 }
 
->>>>>>> 6998e3c642583850c7d33e242dd51450cd135701
 button {
 margin: 10px;
 padding: 10px 20px;
 font-size: 16px;
 cursor: pointer;
 }
-<<<<<<< HEAD
+
   
 h1 {
 margin-bottom: 20px;
 }
   
-=======
->>>>>>> 6998e3c642583850c7d33e242dd51450cd135701
+
