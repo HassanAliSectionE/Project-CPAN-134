@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    color: white;
+    text-align: center;
+}
+
+h1, h2 {
+    margin-top: 20px;
+}
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.day-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.day-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 10px auto;
+    padding: 20px;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.day-name {
+    flex: 1;
+    text-align: left;
+}
+
+.temperature {
+    flex: 1;
+    text-align: right;
+}
+
+.hourly-forecast {
+    margin-top: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.hour-card {
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80px;
+    white-space: normal;
+}
+
+.hour-time {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.weather-icon {
+    font-size: 36px;
+    margin: 5px 0;
+}
+
+.hour-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 600px) {
+    .day-card {
+        width: 90%;
+    }
+}
