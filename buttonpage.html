@@ -1,118 +1,52 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="layout.css">
-    <title>Weather App</title>
-    <script>
-        async function fetchWeather(city) {
-            const loadingText = document.getElementById('loading');
-            const errorText = document.getElementById('error');
-            const weatherContainer = document.getElementById('default-weather');
-
-            loadingText.style.display = 'block';
-            errorText.style.display = 'none';
-            weatherContainer.innerHTML = '';
-
-            try {
-                const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=${city},Canada`);
-                if (!response.ok) throw new Error('City not found');
-
-                const data = await response.json();
-                weatherContainer.innerHTML = `
-                    <div class="weather-card">
-                        <h2>${data.location.name}</h2>
-                        <img src="https:${data.current.condition.icon}" alt="${data.current.condition.text}" class="icon">
-                        <p>${data.current.temp_c}°C, ${data.current.condition.text}</p>
-                    </div>
-                `;
-            } catch (error) {
-                errorText.style.display = 'block';
-                errorText.textContent = error.message;
-            } finally {
-                loadingText.style.display = 'none';
-            }
-        }
-
-        function setDefaultLocation() {
-            const searchInput = document.getElementById('search-bar').value;
-            if (searchInput) {
-                localStorage.setItem('defaultCity', searchInput);
-                fetchWeather(searchInput);
-            } else {
-                alert('Please enter a city name.');
-            }
-        }
-
-        function loadDefaultLocation() {
-            const defaultCity = localStorage.getItem('defaultCity');
-            if (defaultCity) fetchWeather(defaultCity);
-        }
-
-        window.onload = loadDefaultLocation;
-    </script>
-    <style>
-        .weather-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            border-radius: 20px;
-        }
-        .weather-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .icon {
-            width: 50px;
-            height: 50px;
-        }
-        .search-section {
-            margin: 20px 0;
-            text-align: center;
-        }
-        #loading, #error {
-            text-align: center;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <div class="search-section">
-            <input type="text" id="search-bar" placeholder="Enter city name (Canada only)" />
-            <button onclick="setDefaultLocation()">Set Default Location</button>
-            <a href="javascript:void(0);" onclick="fetchWeather(document.getElementById('search-bar').value)">
-                <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Search" style="max-width: 25px; height: 25px;">
-            </a>
+    <head>
+        <link rel="stylesheet" href="layout.css">
+        <title>
+          layout and nav 
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <div class = "botnav">
+                <ul>
+                    <li><a href="buttonpage.html"><img src="https://cdn-icons-png.flaticon.com/512/3439/3439707.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                    <li><a href="sharednav.html"><img src="https://static.thenounproject.com/png/3574480-200.png"  style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                </ul>
+            </div>
         </div>
-        <p id="loading" style="display:none;">Loading...</p>
-        <p id="error" style="display:none; color: red;"></p>
-
-        <div id="default-weather">
-            <!-- Default location weather card will appear here -->
-        </div>
-
+        <div class="body-buttons">
         <div class="container">
-            <!-- Other weather cards (static examples) -->
             <div class="weather-card">
-                <h2>Toronto</h2>
-                <img src="https://www.weatherbit.io/static/img/icons/c01d.png" alt="sunny" class="icon">
-                <p>22°C, Sunny</p>
+              <h2>Toronto</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c01d.png" alt="sunny" class="icon">
+              <p>22°C, Sunny</p>
             </div>
             <div class="weather-card">
-                <h2>Ottawa</h2>
-                <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="partly cloudy" class="icon">
-                <p>18°C, Partly Cloudy</p>
+              <h2>ottawa</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="partly cloudy" class="icon">
+              <p>18°C, Partly Cloudy</p>
             </div>
             <div class="weather-card">
-                <h2>Montreal</h2>
-                <img src="https://www.weatherbit.io/static/img/icons/c03d.png" alt="cloudy" class="icon">
-                <p>15°C, Cloudy</p>
+              <h2>Montreal</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c03d.png" alt="cloudy" class="icon">
+              <p>15°C, Cloudy</p>
             </div>
+            <div class="weather-card">
+              <h2>Scarborough</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+              <p>12°C, Overcast</p>
+            </div>
+            <div class="weather-card">
+                <h2>Brampton</h2>
+                <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+                <p>12°C, Overcast</p>
+              </div>
+              <div class="weather-card">
+                <h2>Missisauga</h2>
+                <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+                <p>12°C, Overcast</p>
+              </div>
+          </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
