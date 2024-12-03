@@ -1,32 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="layout.css">
-</head>
-<body>
-   
-    <div class="container">
-        <div id="search-bar">
-            <input type="text" id="search-input" placeholder="Search for a city" />
-            <button id="search-button">Search</button>
-            <button id="set-default-button">Set Default</button>
-            <button id="reset-button">Reset</button> 
+<html>
+    <head>
+        <link rel="stylesheet" href="layout.css">
+        <title>
+          layout and nav 
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <div class = "botnav">
+                <ul>
+                    <li><a href="buttonpage.html"><img src="https://cdn-icons-png.flaticon.com/512/3439/3439707.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                    <li><a href="sharednav.html"><img src="https://static.thenounproject.com/png/3574480-200.png"  style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                </ul>
+            </div>
         </div>
-        <p id="error-message" class="error"></p>
-        <div id="weather-container"></div>
-    </div>
-
-    <div class="content">
-        <div class = "botnav">
-            <ul>
-                <li><a href="buttonpage.html"><img src="https://cdn-icons-png.flaticon.com/512/3439/3439707.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
-                <li><a href="sharednav.html"><img src="https://static.thenounproject.com/png/3574480-200.png"  style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
-            </ul>
+        <div class="body-buttons">
+        <div class="container">
+            <div class="weather-card">
+              <h2>Toronto</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c01d.png" alt="sunny" class="icon">
+              <p>22°C, Sunny</p>
+            </div>
+            <div class="weather-card">
+              <h2>ottawa</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="partly cloudy" class="icon">
+              <p>18°C, Partly Cloudy</p>
+            </div>
+            <div class="weather-card">
+              <h2>Montreal</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c03d.png" alt="cloudy" class="icon">
+              <p>15°C, Cloudy</p>
+            </div>
+            <div class="weather-card">
+              <h2>Scarborough</h2>
+              <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+              <p>12°C, Overcast</p>
+            </div>
+            <div class="weather-card">
+                <h2>Brampton</h2>
+                <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+                <p>12°C, Overcast</p>
+              </div>
+              <div class="weather-card">
+                <h2>Missisauga</h2>
+                <img src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="overcast" class="icon">
+                <p>12°C, Overcast</p>
+              </div>
+          </div>
         </div>
-
-    <script src="script.js"></script>
-</body>
+    </body>
 </html>
