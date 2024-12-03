@@ -24,15 +24,10 @@
     const description = data.weather[0].description;
     const weatherIcon = `${weatherIconUrl}${data.weather[0].icon}@2x.png`;
   
-    document.getElementById("city").textContent = city;
+   document.getElementById("city").textContent = city;
   document.getElementById("temperature").textContent = `${temperature}°C`;
   document.getElementById("description").textContent = capitalize(description);
-  document.getElementById("feels-like").textContent = `${feelsLike}°C`;
-  document.getElementById("humidity").textContent = `${humidity}%`;
-  document.getElementById("wind-speed").textContent = `${windSpeed} km/h`;
   document.getElementById("weather-icon").src = weatherIcon;
-  document.getElementById("sunrise").textContent = sunrise;
-  document.getElementById("sunset").textContent = sunset;
   }
   
   function capitalize(str) {
