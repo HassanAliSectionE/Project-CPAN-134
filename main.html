@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="top-icons">
+            <i id="modeToggle" class="fas fa-lightbulb icon lightbulb"></i>
+            <i id="unitToggle" class="fas fa-thermometer-half icon thermometer"></i>
+            </div>
+            <p id="weatherInfo">Fetching weather data...</p>
+            <p id="temperature">Temperature: 0°C</p>
+            </div>
+        <div class="content">
+            <div class = "botnav">
+                <ul>
+                    <li><a href="buttonpage.html"><img src="https://cdn-icons-png.flaticon.com/512/3439/3439707.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                    <li><a href="main.html"><img src="https://static.thenounproject.com/png/3574480-200.png"  style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="weather-app">
+            <div class="main-weather">
+              <h1 id="city">Loading...</h1>
+              <h2 id="temperature">--°C</h2>
+              <p id="description">---</p>
+              <div class="icon-container">
+                <img id="weather-icon" src="" alt="Weather icon">
+              </div>
+            </div>
+          </div>
+          <div id="weather" class="weather-container"></div>
+
+          <script>
+              function getCurrentLocation() {
+                  if (navigator.geolocation) {
+                      navigator.geolocation.getCurrentPosition(
+                          (position) => {
+                              const latitude = position.coords.latitude;
+                              const longitude = position.coords.longitude;
+                              fetchWeather(latitude, longitude);
+                          },
+                          (error) => {
+                              console.error("Error fetching location:", error);
+                              document.getElementById('weather').innerHTML = `<p>Unable to get location. Please allow location access.</p>`;
+                          }
+                      );
+                  } else {
+                      document.getElementById('weather').innerHTML = `<p>Geolocation is not supported by your browser.</p>`;
+                  }
+              }
+  
+              async function fetchWeather(latitude, longitude) {
+                  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_min,temperature_2m_max,weathercode&hourly=temperature_2m,weathercode&timezone=auto`;
+                  try {
+                      const response = await fetch(apiUrl);
+                      const data = await response.json();
+                      displayHourlyForecast(data);
+                      displayDailyWeather(data);
+                  } catch (error) {
+                      console.error("Error fetching weather data:", error);
+                      document.getElementById('weather').innerHTML = `<p>Unable to fetch weather data.</p>`;
+                  }
+              }
+  
+              function getWeatherIconClass(weatherCode) {
+                  const iconMap = {
+                      0: 'wi-day-sunny', 1: 'wi-day-cloudy', 2: 'wi-cloudy', 3: 'wi-cloudy',
+                      45: 'wi-fog', 48: 'wi-fog', 51: 'wi-rain', 61: 'wi-rain',
+                      71: 'wi-snow', 80: 'wi-showers', 95: 'wi-thunderstorm', 99: 'wi-storm-showers'
+                  };
+                  return iconMap[weatherCode] || 'wi-na';
+              }
+  
+              function displayHourlyForecast(data) {
+                  const weatherContainer = document.getElementById("weather");
+                  const hourlyForecast = document.createElement("div");
+                  hourlyForecast.className = "hourly-forecast";
+                  hourlyForecast.innerHTML = "<h2>10-Hour Forecast</h2>";
+  
+                  const { hourly } = data;
+                  const { time, temperature_2m, weathercode } = hourly;
+  
+                  const now = new Date();
+                  const currentHourIndex = time.findIndex(t => new Date(t).getTime() > now.getTime());
+  
+                  for (let i = 0; i < 10; i++) {
+                      const index = currentHourIndex + i;
+                      const hourTime = new Date(time[index]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                      const temp = temperature_2m[index];
+                      const iconClass = getWeatherIconClass(weathercode[index]);
+  
+                      const hourCard = document.createElement("div");
+                      hourCard.className = "hour-card";
+  
+                      hourCard.innerHTML = `
+                          <div class="hour-time">${hourTime}</div>
+                          <div class="weather-icon"><i class="wi ${iconClass}"></i></div>
+                          <div class="temperature">${temp}°C</div>
+                      `;
+  
+                      hourlyForecast.appendChild(hourCard);
+                  }
+  
+                  weatherContainer.appendChild(hourlyForecast);
+              }
+  
+              function displayDailyWeather(data) {
+                  const weatherContainer = document.getElementById("weather");
+  
+                  const dayContainer = document.createElement("div");
+                  dayContainer.className = "day-container";
+                  dayContainer.innerHTML = "<h2>Weekly Forecast</h2>";
+  
+                  const { daily } = data;
+                  const { time, temperature_2m_min, temperature_2m_max, weathercode } = daily;
+                  const today = new Date().setHours(0, 0, 0, 0);
+  
+                  time.forEach((date, index) => {
+                      const forecastDate = new Date(date).setHours(0, 0, 0, 0);
+                      if (forecastDate >= today) {
+                          const dayCard = document.createElement("div");
+                          dayCard.className = "day-card";
+  
+                          const day = new Date(date).toLocaleDateString(undefined, { weekday: 'short' });
+                          const minTemp = temperature_2m_min[index];
+                          const maxTemp = temperature_2m_max[index];
+                          const iconClass = getWeatherIconClass(weathercode[index]);
+  
+                          dayCard.innerHTML = `
+                              <div class="day-name">${day}</div>
+                              <div class="temperature"><i class="wi ${iconClass}"></i> Min: ${minTemp}°C, Max: ${maxTemp}°C</div>
+                          `;
+  
+                          dayContainer.appendChild(dayCard);
+                      }
+                  });
+  
+                  weatherContainer.appendChild(dayContainer);
+              }
+  
+              getCurrentLocation();
+          </script>
+          <div class="body-cards">
+            <div class="weather-stats">
+                <div class="bigcard">
+                    <h3>Precipitation</h3>
+                        </div>
+                <div class="card">
+            <h3>Feels like</h3>
+            
+                </div>
+            <div class="card">
+                <h3>Precipitation</h3>
+             
+            </div>
+                <div class="card">
+                    <h3>sunset</h3>
+             
+            
+                </div>
+                    <div class="card">
+                        <h3>Humidity</h3>
+                      
+            </div>
+            </div>
+            <script src="main.js"></script>
+    </body>
+</html>
