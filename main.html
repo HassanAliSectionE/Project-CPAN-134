@@ -143,33 +143,93 @@
   
               getCurrentLocation();
           </script>
-          </body>
-          <body></body>
-          <div class="body-cards">
-            <div class="weather-stats">
-                <div class="bigcard">
-                    <h3>Precipitation</h3>
-                        </div>
-                <div class="card">
-            <h3>Feels like</h3>
-            
+    
+            <div class="content">
+                <div class="botnav">
+                    <ul>
+                        <li><a href="buttonpage.html"><img src="https://cdn-icons-png.flaticon.com/512/3439/3439707.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                        <li><a href="sharednav.html"><img src="https://static.thenounproject.com/png/3574480-200.png" style="max-width: 25px; height: 25px; margin: 0px; width: 25px;"></a></li>
+                    </ul>
                 </div>
-            <div class="card">
-                <h3>Precipitation</h3>
-             
             </div>
-                <div class="card">
-                    <h3>sunset</h3>
-             
-            
-                </div>
+            <div class="body-cards">
+                <div class="weather-stats">
+                    <div class="bigcard">
+                        <h3>Precipitation</h3>
+                        <p id="precipitation">Loading...</p>
+                    </div>
+                    <div class="card">
+                        <h3>Feels like</h3>
+                        <p id="feels-like">Loading...</p>
+                    </div>
+                    <div class="card">
+                        <h3>Temperature</h3>
+                        <p id="temperature">Loading...</p>
+                    </div>
+                    <div class="card">
+                        <h3>Sunset</h3>
+                        <p id="sunset">Loading...</p>
+                    </div>
                     <div class="card">
                         <h3>Humidity</h3>
-                      
+                        <p id="humidity">Loading...</p>
+                    </div>
+                </div>
             </div>
-            </div>
-        </body>
-       
+            <script>
+               
+                const apiKey =  "90bf53ffb83ae6c976c1c29639cb86a2";
+        
+      
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(getWeather, showError);
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                }
+        
+               
+                function getWeather(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+        
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById("precipitation").innerText = data.weather[0].description || "N/A";
+                            document.getElementById("feels-like").innerText = `${data.main.feels_like}°C`;
+                            document.getElementById("temperature").innerText = `${data.main.temp}°C`;
+                            const sunsetTime = new Date(data.sys.sunset * 1000);
+                            document.getElementById("sunset").innerText = sunsetTime.toLocaleTimeString();
+                            document.getElementById("humidity").innerText = `${data.main.humidity}%`;
+                        })
+                        .catch(error => {
+                            console.error("Error fetching weather data:", error);
+                            alert("Failed to fetch weather data.");
+                        });
+                }
+        
+                function showError(error) {
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("User denied the request for Geolocation.");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("Location information is unavailable.");
+                            break;
+                        case error.TIMEOUT:
+                            alert("The request to get user location timed out.");
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            alert("An unknown error occurred.");
+                            break;
+                    }
+                }
+        
+                getLocation();
+            </script>
             <script src="main.js"></script>
     </body>
 </html>
